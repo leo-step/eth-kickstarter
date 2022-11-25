@@ -6,7 +6,7 @@ require("dotenv").config();
 
 const provider = new HDWalletProvider(
   process.env.MNEMONIC,
-  process.env.INFURA_API
+  "https://goerli.infura.io/v3/69194ec6319d4463b70ef7215e7ee7a7"
 );
 const web3 = new Web3(provider);
 
