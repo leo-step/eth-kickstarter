@@ -7,6 +7,7 @@ import { Router } from "../../routes";
 
 class CampaignNew extends Component {
   state = {
+    name: "",
     minimumContribution: "",
     errorMessage: "",
     loading: false,
@@ -18,9 +19,12 @@ class CampaignNew extends Component {
     this.setState({ loading: true, errorMessage: "" });
 
     try {
+      if (this.state.name === "") {
+        throw new Error("No name provided for the campaign.");
+      }
       const accounts = await web3.eth.getAccounts();
       await factory.methods
-        .createCampaign(this.state.minimumContribution)
+        .createCampaign(this.state.name, this.state.minimumContribution)
         .send({
           from: accounts[0],
         });
@@ -37,6 +41,15 @@ class CampaignNew extends Component {
       <Layout>
         <h3>Create a Campaign</h3>
         <Form onSubmit={this.onSubmit} error={this.state.errorMessage !== ""}>
+          <Form.Field>
+            <label>Campaign Name</label>
+            <Input
+              value={this.state.name}
+              onChange={(event) =>
+                this.setState({ name: event.target.value })
+              }
+            />
+          </Form.Field>
           <Form.Field>
             <label>Minimum Contribution</label>
             <Input

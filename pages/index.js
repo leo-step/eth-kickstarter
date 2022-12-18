@@ -6,16 +6,21 @@ import { Link } from "../routes";
 
 class CampaignIndex extends Component {
   static async getInitialProps() {
-    const campaigns = await factory.methods.getDeployedCampaigns().call();
+    const campaignData = await factory.methods.getDeployedCampaigns().call();
+    const campaigns = [];
+    for (let i = 0; i < campaignData[0].length; i++) {
+      campaigns.push({name: campaignData[0][i], address: campaignData[1][i]})
+    }
     return { campaigns };
   }
 
   renderCampaigns() {
-    const items = this.props.campaigns.map((address) => {
+    const items = this.props.campaigns.map((campaign) => {
       return {
-        header: address,
+        header: campaign.name,
+        meta: campaign.address,
         description: (
-          <Link route={`/campaigns/${address}`}>
+          <Link route={`/campaigns/${campaign.address}`}>
             <a>View Campaign</a>
           </Link>
         ),
