@@ -2,6 +2,7 @@ pragma solidity ^0.4.17;
 pragma experimental ABIEncoderV2;
 
 contract CampaignFactory {
+    // change this into a struct later
     string[] public deployedCampaignsNames;
     address[] public deployedCampaignsAddresses;
 
