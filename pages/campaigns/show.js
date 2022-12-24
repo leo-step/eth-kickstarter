@@ -39,10 +39,10 @@ class CampaignShow extends Component {
         style: { overflowWrap: "break-word" },
       },
       {
-        header: minimumContribution,
-        meta: "Minimum contribution (wei)",
+        header: web3.utils.fromWei(minimumContribution, "ether"),
+        meta: "Minimum contribution (ether)",
         description:
-          "You must contribute at least this much wei to become an approver.",
+          "You must contribute at least this much ether to become an approver.",
       },
       {
         header: requestsCount,

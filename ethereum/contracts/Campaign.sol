@@ -1,22 +1,26 @@
 pragma solidity ^0.4.17;
-pragma experimental ABIEncoderV2;
 
 contract CampaignFactory {
-    // change this into a struct later
-    string[] public deployedCampaignsNames;
-    address[] public deployedCampaignsAddresses;
+    struct CampaignInfo {
+        string campaignName;
+        address campaignAddress;
+    }
+
+    CampaignInfo[] public campaigns;
 
     function createCampaign(string name, uint minimum) public {
         address newCampaignAddress = new Campaign(name, minimum, msg.sender);
-        deployedCampaignsNames.push(name);
-        deployedCampaignsAddresses.push(newCampaignAddress);
+
+        CampaignInfo memory newCampaignInfo = CampaignInfo({
+           campaignName: name,
+           campaignAddress: newCampaignAddress
+        });
+
+        campaigns.push(newCampaignInfo);
     }
 
-    function getDeployedCampaigns() public view returns (string[], address[]) {
-        return (
-            deployedCampaignsNames,
-            deployedCampaignsAddresses
-        );
+    function getCampaignsCount() public view returns (uint) {
+        return campaigns.length;
     }
 }
 
